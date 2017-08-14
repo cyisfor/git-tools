@@ -57,9 +57,12 @@ int main(int argc, char *argv[])
 
 	const char* remote_name = argv[1];
 	git_remote* remote = NULL;
-	repo_check(git_remote_lookup(&remote, repo, remote_name));
-	const char* url = git_remote_pushurl(remote);
+	const char* url = remote_name;
 	size_t ulen = strlen(url);
+	if(0 == git_remote_lookup(&remote, repo, remote_name)) {
+		url = git_remote_pushurl(remote);
+	}
+
 	// assume it's in the form host:dest
 	const char* colon = memchr(url,':',ulen);
 	if(!colon) {
