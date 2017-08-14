@@ -1,9 +1,14 @@
 #include <git2/repository.h>
+#include <git2/remote.h>
 #include <sys/wait.h> // waitpid
 #include <assert.h>
 #include <unistd.h> // pipe, fork, dup2, close, execlp
 #include <error.h>
 #include <string.h>
+
+void repo_check(int res) {
+	assert(res == 0);
+}
 
 #define ERROR(...) error(23,0, __VA_ARGS__)
 #define LITSIZ(a) (sizeof(a)-1)
@@ -77,6 +82,7 @@ int main(int argc, char *argv[])
 		return waitfor(pid);
 	}
 
+	int pid;
 	int out = ssh(&pid,host);
 	write(out,LITLEN("mkdir -p "));
 	write(out,path,plen);
@@ -85,8 +91,8 @@ int main(int argc, char *argv[])
 	write(out,LITLEN("\nexec git init\n"));
 	close(out);
 
-	int res = waitfor(pid);
-	assert(res == 0);
+	status = waitfor(pid);
+	assert(status == 0);
 
 	status = push();
 	assert(status == 0);
