@@ -1,5 +1,7 @@
 #include <git2/repository.h>
 #include <sys/wait.h> // waitpid
+#include <assert.h>
+#include <unistd.h> // pipe, fork
 
 int waitfor(int pid) {
 	int status;
