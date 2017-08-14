@@ -1,7 +1,13 @@
 #include <git2/repository.h>
 #include <sys/wait.h> // waitpid
 #include <assert.h>
-#include <unistd.h> // pipe, fork
+#include <unistd.h> // pipe, fork, dup2, close, execlp
+#include <error.h>
+#include <string.h>
+
+#define ERROR(...) error(23,0, __VA_ARGS__)
+#define LITSIZ(a) (sizeof(a)-1)
+#define LITLEN(a) a,LITSIZ(a)
 
 int waitfor(int pid) {
 	int status;
