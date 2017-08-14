@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
 		ERROR("pushcreate repo [branch]");
 		return 23;
 	}
-	const char* branch = "pushed";
-	size_t branch_len = LITSIZ("pushed");
+	const char* branch = "HEAD:pushed";
+	size_t branch_len = LITSIZ("HEAD:pushed");
 	if(argc == 3) {
 		branch = argv[2];
 		branch_len = strlen(branch);
