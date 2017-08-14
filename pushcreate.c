@@ -39,7 +39,7 @@ int ssh(int* pid, const char* host) {
 
 int main(int argc, char *argv[])
 {
-	if(argc != 3) {
+	if(argc != 3 && argc != 2) {
 		ERROR("pushcreate repo [branch]");
 		return 23;
 	}
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 	write(out,LITLEN("\nexec git init\n"));
 	close(out);
 
-	status = waitfor(pid);
+	int status = waitfor(pid);
 	assert(status == 0);
 
 	status = push();
