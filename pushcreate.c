@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
 	}
 	char host[0x100];
 	memcpy(host,url,(colon-url));
+	host[colon-url] = '\0';
 	const char* path = colon+1; // ~/some/where/repo
 	size_t plen = ulen - (path-url);
 
@@ -105,7 +106,10 @@ int main(int argc, char *argv[])
 	out = ssh(&pid,host);
 	write(out,LITLEN("cd "));
 	write(out,path,plen);
-	write(out,LITLEN("\nexec git merge "));
+	write(out,LITLEN("\ngit merge "));
+	write(out,branch,branch_len);
+	write(out,LITLEN("\n"));
+	write(out,LITLEN("exec git branch -d "));
 	write(out,branch,branch_len);
 	write(out,LITLEN("\n"));
 	close(out);
