@@ -6,9 +6,7 @@
 #include <error.h>
 #include <string.h>
 
-void repo_check(int res) {
-	assert(res == 0);
-}
+#define repo_check(res) assert(res == 0)
 
 #define ERROR(...) error(23,0, __VA_ARGS__)
 #define LITSIZ(a) (sizeof(a)-1)
@@ -55,7 +53,7 @@ int main(int argc, char *argv[])
 							 &repo,
 							 ".",
 							 0,
-							 ""));
+							 NULL));
 
 	const char* remote_name = argv[1];
 	git_remote* remote = NULL;
