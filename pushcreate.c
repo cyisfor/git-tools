@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
 		ERROR("pushcreate repo [branch]");
 		return 23;
 	}
-	const char* branch = "HEAD:pushed";
-	size_t branch_len = LITSIZ("HEAD:pushed");
+	const char* branch = "pushed";
+	size_t branch_len = LITSIZ("pushed");
 	if(argc == 3) {
 		branch = argv[2];
 		branch_len = strlen(branch);
@@ -77,7 +77,10 @@ int main(int argc, char *argv[])
 	int push() {
 		int pid = fork();
 		if(pid == 0) {
-			execlp("git","git","push",remote_name,branch,NULL);
+			char derp[0x100] = "HEAD:";
+			memcpy(derp+LITSIZ("HEAD:"),branch,branch_len);
+			derp[LITSIZ("HEAD:")+branch_len] = '\0';
+			execlp("git","git","push",remote_name,derp,NULL);
 			abort();
 		}
 		return waitfor(pid);
