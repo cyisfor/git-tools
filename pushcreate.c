@@ -1,6 +1,8 @@
-#include <git2/repo.h>
+#include <git2/repository.h>
+#include <sys/wait.h> // waitpid
 
 int waitfor(int pid) {
+	int status;
 	int derp = waitpid(pid,&status,0);
 	assert(derp == pid);
 	assert(WIFEXITED(status));
