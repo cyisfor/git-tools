@@ -64,12 +64,13 @@ int main(int argc, char *argv[])
 		if(!url)
 			url = git_remote_url(remote);
 		assert(url);
+		ulen = strlen(url);
 	}
 
 	// assume it's in the form host:dest
 	const char* colon = memchr(url,':',ulen);
 	if(!colon) {
-		ERROR("only one kind of URL supported sorry");
+		ERROR("only one kind of URL supported sorry not '%s'",url);
 		return 23;
 	}
 	char host[0x100];
