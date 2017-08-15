@@ -40,3 +40,12 @@ function uplink {
     [[ -L $2 ]] && return;
     ln -rs $source $2
 }
+
+function update_and_commit {
+		git pull "$@"
+		F=$(basename $(pwd))
+		cd ..
+		git add $F
+		git commit -a -m submodule
+		cd $F
+}
