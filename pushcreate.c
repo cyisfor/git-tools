@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 			char derp[0x100] = "HEAD:";
 			memcpy(derp+LITSIZ("HEAD:"),branch,branch_len);
 			derp[LITSIZ("HEAD:")+branch_len] = '\0';
-			execlp("git","git","push","--recurse-submodules=check",remote_name,derp,NULL);
+			execlp("git","git","push",remote_name,derp,NULL);
 			abort();
 		}
 		return waitfor(pid);
@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 	write(out,LITLEN("\nset -e\n"));
 	write(out,LITLEN("\ngit merge "));
 	write(out,branch,branch_len);
-	write(out,LITLEN("\n"));
+	write(out,LITLEN("\ngit submodule update --init\n")); // hate... git...
 	write(out,LITLEN("exec git branch -d "));
 	write(out,branch,branch_len);
 	write(out,LITLEN("\n"));
