@@ -21,8 +21,12 @@ function clonepull {
 				fi
         if [[ -n "$adjremote" ]]; then
             cd $dest
+						set -x
+						set -e
             git remote set-url origin $remote
             git remote add local $local
+						set +x
+						set +e
             #git pull
             cd ..
         fi
