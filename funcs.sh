@@ -15,9 +15,9 @@ function clonepull {
         cd ..
     else
 				if [[ -n "$adjremote" ]]; then
-						git clone $local $dest
+						git clone --recursive $local $dest
 				else
-						git clone $remote $dest
+						git clone --recursive $remote $dest
 				fi
         if [[ -n "$adjremote" ]]; then
             cd $dest
