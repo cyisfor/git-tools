@@ -61,6 +61,9 @@ int main(int argc, char *argv[])
 	size_t ulen = strlen(url);
 	if(0 == git_remote_lookup(&remote, repo, remote_name)) {
 		url = git_remote_pushurl(remote);
+		if(!url)
+			url = git_remote_url(remote);
+		assert(url);
 	}
 
 	// assume it's in the form host:dest
@@ -106,6 +109,7 @@ int main(int argc, char *argv[])
 	out = ssh(&pid,host);
 	write(out,LITLEN("cd "));
 	write(out,path,plen);
+	write(out,LITLEN("\nset -e\n"));
 	write(out,LITLEN("\ngit merge "));
 	write(out,branch,branch_len);
 	write(out,LITLEN("\n"));
