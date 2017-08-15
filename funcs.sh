@@ -26,3 +26,10 @@ function clonepull {
     fi
 }
 
+function uplink {
+		# this is better than thrice-cloned submodules
+		# uplink dir name => name links to dir/name
+    source=$1/$2
+    [[ -L $2 ]] && return;
+    ln -rs $source $2
+}
