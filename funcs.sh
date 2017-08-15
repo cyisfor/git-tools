@@ -8,7 +8,7 @@ function clonepull {
     fi
 
 		if [[ -d "$dest" ]]; then
-        [[ -n "$nocheck" ]] && return
+        [[ -z "$check" ]] && return
         cd $dest
         git pull local master
         git pull origin  master
