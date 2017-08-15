@@ -18,6 +18,7 @@ function clonepull {
 						git clone $local $dest
 				else
 						git clone $remote $dest
+				fi
         if [[ -n "$adjremote" ]]; then
             cd $dest
             git remote set-url origin $remote
