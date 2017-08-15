@@ -1,11 +1,10 @@
 function clonepull {
 		[[ -n "$dest" ]] || return 1
-		if [[ -n "$source" ]]; then
+		if [[ -d "$local" ]]; then
         adjremote=1
     else
 				[[ -n "$remote" ]] || return 2
-        echo remote source $remote
-        source=$remote
+        # echo source not found, using remote source $remote
     fi
 
 		if [[ -d "$dest" ]]; then
@@ -15,7 +14,10 @@ function clonepull {
         git pull origin  master
         cd ..
     else
-        git clone $source $dest
+				if [[ -n "$adjremote" ]]; then
+						git clone $local $dest
+				else
+						git clone $remote $dest
         if [[ -n "$adjremote" ]]; then
             cd $dest
             git remote set-url origin $remote
