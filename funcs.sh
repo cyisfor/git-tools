@@ -22,7 +22,7 @@ function clonepull {
         if [[ -n "$adjremote" ]]; then
             cd $dest
             git remote set-url origin $remote
-            git remote add local $source
+            git remote add local $local
             #git pull
             cd ..
         fi
